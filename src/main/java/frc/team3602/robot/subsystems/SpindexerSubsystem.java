@@ -27,7 +27,7 @@ public class SpindexerSubsystem extends SubsystemBase {
 
     /* Commands */
 
-    public Command transferFuel() {
+    public Command setSpindexerSpeed(double SpindexerSpeed) {
         return runOnce(() -> {
             spindexerMotor.set(spindexerConstants.kSpindexerMotorSpeed);
         });
@@ -39,7 +39,7 @@ public class SpindexerSubsystem extends SubsystemBase {
         });
     }
 
-    public Command receiveFuel() {
+    public Command setReceiveSpeed(double ReceiveSpeed) {
         return runOnce(() -> {
             receiveMotor.set(spindexerConstants.kRecieveFuelSpeed);
         });

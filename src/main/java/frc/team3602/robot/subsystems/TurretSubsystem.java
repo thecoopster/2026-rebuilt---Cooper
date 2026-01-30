@@ -31,7 +31,7 @@ public class TurretSubsystem extends SubsystemBase {
 
     //Encoder
   public Double getEncoder() {
-    return (turretMotor.getRotorPosition().getValueAsDouble() * 18);
+    return (turretMotor.getRotorPosition().getValueAsDouble() * 36); // every revolution is 36 degrees because it is a 10:1 gear ratio
   }
 
     //Vision
@@ -42,21 +42,34 @@ public class TurretSubsystem extends SubsystemBase {
 
     //Controllers *These PID values need to be changed*
     private final PIDController turretController = new PIDController(.05, 0.0, 0);
-    private final PIDController aimController = new PIDController(.02, 0.0, 0);
+    private final PIDController aimController = new PIDController(.03, 0.0, 0);
 
 
 
     //Commands
-    public Command setAngle(double setAngle) {
+
+    public Command setAngle(double setPosition) {
+
         return runOnce(() -> {
-            this.setAngle = setAngle;
-        });
+        
+
+      if(setPosition > 90) {
+        setAngle = 90;
+      }
+      else if(setPosition < -180) {
+        setAngle = -180;
+      }
+    
+      else {
+            this.setAngle = setPosition;
+        }});
     }
 
     public Command testTurret(double voltage) {
         return runOnce(() -> {
             turretMotor.setVoltage(voltage);
         });
+        
     }
 
     public Command stopTurret() {
@@ -141,6 +154,8 @@ public double rAlignment() {
         SmartDashboard.putNumber("Set Angle", setAngle);
         SmartDashboard.putNumber("Turret Set Angle", vision.getTurretTX());
         SmartDashboard.putNumber("Aim PID", aimController.calculate(vision.getTurretTX(), 0));
+
+
     }   
 
 

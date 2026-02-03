@@ -33,10 +33,10 @@ public class Vision {
     }
 
     public double getTY() {
-        return LimelightHelpers.getTY("limelight-primary");
+        return LimelightHelpers.getTY("limelight-turret");
     }
 
-    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight-primary");
+    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight-turret");
     NetworkTableEntry ty = table.getEntry("ty");
 
     double targetOffsetAngle_Vertical = ty.getDouble(0.0);
@@ -49,7 +49,7 @@ public class Vision {
     // distance from the target to the floor
     double goalHeightInches = 60.0; 
 
-    double angleToGoalDegrees = limelightMountAngleDegrees + targetOffsetAngle_Vertical;
+    double angleToGoalDegrees = limelightMountAngleDegrees + getTY();
     double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
     //calculated Distance
     public double getDist() {

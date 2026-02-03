@@ -157,6 +157,8 @@ public class TurretSubsystem extends SubsystemBase {
         return voltage;
     }
 
+    double distance = 0;
+    double angle = 0;
     // Periodic
     @Override
     public void periodic() {
@@ -166,10 +168,14 @@ public class TurretSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Turret Set Angle", vision.getTurretTX());
         SmartDashboard.putNumber("Aim PID", aimController.calculate(vision.getTurretTX(), 0));
         SmartDashboard.putNumber("Distance Calculation", vision.getDist());
-
+        SmartDashboard.putNumber("GetTy", vision.getTY());
         // turretFeedForward = turnFeedforward();
         SmartDashboard.putNumber("Turret Feedforward", turretFeedForward); // Bruh
 
+        SmartDashboard.putNumber("GetDistance", vision.getDist());
+        angle = Math.toRadians(vision.getTY() + 29.17);
+        distance =(62.0 - 16.75) / Math.tan(angle);
+        SmartDashboard.putNumber("counculatedDist", distance);
     }
 
     // Config
